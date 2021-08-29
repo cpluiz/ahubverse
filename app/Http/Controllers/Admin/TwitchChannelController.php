@@ -30,6 +30,8 @@ class TwitchChannelController extends TwitchController{
 
     public function updateChannel(int $id){
         $channel = TwitchChannels::find($id);
+        if(!$channel)
+            $channel = new TwitchChannels;
         $this->validate(
             request(),
             [
@@ -39,8 +41,6 @@ class TwitchChannelController extends TwitchController{
                 'ignore_users' => 'sometimes|nullable'
             ]
         );
-        if(!$channel)
-            $channel = new TwitchChannels;
         $channel->fill(request()->all());
         $channel->channel_name = mb_strtolower($channel->channel_name);
         if(!$channel->channel_id)
