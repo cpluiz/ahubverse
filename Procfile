@@ -1,1 +1,1 @@
-web: bin/start-nginx-solo
+web: vendor/bin/heroku-php-nginx -C nginx.conf public/
