@@ -1,0 +1,12 @@
+{
+    "/js/admin/admin.js": "/js/admin/admin.js",
+    "/js/frontend.js": "/js/frontend.js",
+    "/js/app.js": "/js/app.js",
+    "/css/app.css": "/css/app.css",
+    "/css/frontend/twitch/config.css": "/css/frontend/twitch/config.css",
+    "/css/admin/admin.css": "/css/admin/admin.css",
+    "/css/frontend/twitch/config.min.css": "/css/frontend/twitch/config.min.css",
+    "/css/admin/admin.min.css": "/css/admin/admin.min.css",
+    "/js/admin/admin.min.js": "/js/admin/admin.min.js",
+    "/js/frontend.min.js": "/js/frontend.min.js"
+}
