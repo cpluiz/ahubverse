@@ -27,6 +27,15 @@ class TwitchChannels extends Model
     protected $hidden = [
         'channel_id',
     ];
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'user_id' => 'integer',
+        'channel_id' => 'integer'
+    ];
 
     public function user(){
         return $this->belongsTo(User::class,'user_id');
