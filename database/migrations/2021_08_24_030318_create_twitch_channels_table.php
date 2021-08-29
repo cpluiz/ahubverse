@@ -15,7 +15,7 @@ class CreateTwitchChannelsTable extends Migration
     {
         Schema::create('twitch_channels', function (Blueprint $table) {
             $table->id();
-            $table->uuid('user_id');
+            $table->integer('user_id');
             $table->text('channel_name');
             $table->text('channel_id')->nullable();
             $table->timestamps();
