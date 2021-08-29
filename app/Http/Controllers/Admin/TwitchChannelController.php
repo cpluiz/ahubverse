@@ -32,15 +32,16 @@ class TwitchChannelController extends TwitchController{
         $channel = TwitchChannels::find($id);
         if(!$channel)
             $channel = new TwitchChannels;
-        $this->validate(
-            request(),
-            [
-                'channel_name' => 'required|unique:twitch_channels,channel_name,'.$id,
-                'user_id' => 'required|unique:twitch_channels,user_id,'.$id,
-                'follow_suggestions' => 'sometimes|nullable',
-                'ignore_users' => 'sometimes|nullable'
-            ]
-        );
+        if(TwitchChannels::all()->count() > 1)
+            $this->validate(
+                request(),
+                [
+                    'channel_name' => 'required|unique:twitch_channels,channel_name,'.$id,
+                    'user_id' => 'required|unique:twitch_channels,user_id,'.$id,
+                    'follow_suggestions' => 'sometimes|nullable',
+                    'ignore_users' => 'sometimes|nullable'
+                ]
+            );
         $channel->fill(request()->all());
         $channel->channel_name = mb_strtolower($channel->channel_name);
         if(!$channel->channel_id)
