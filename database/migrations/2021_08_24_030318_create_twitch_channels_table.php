@@ -17,7 +17,7 @@ class CreateTwitchChannelsTable extends Migration
             $table->id();
             $table->integer('user_id');
             $table->text('channel_name');
-            $table->text('channel_id')->nullable();
+            $table->integer('channel_id')->nullable();
             $table->timestamps();
         });
     }
