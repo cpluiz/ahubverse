@@ -43,6 +43,10 @@ class TwitchChannelController extends TwitchController{
                 ]
             );
         $channel->fill(request()->all());
+        if($id==0){
+            $channel->follow_suggestions = null;
+            $channel->ignore_users = null;
+        }
         $channel->channel_name = mb_strtolower($channel->channel_name);
         if(!$channel->channel_id)
             $channel->channel_id = $this->GetChannelIdByName(mb_strtolower($channel->channel_name));
