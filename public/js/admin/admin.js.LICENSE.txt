@@ -5,6 +5,12 @@
   */
 
 /*!
+ * AdminLTE v3.1.0 (https://adminlte.io)
+ * Copyright 2014-2021 Colorlib <https://colorlib.com>
+ * Licensed under MIT (https://github.com/ColorlibHQ/AdminLTE/blob/master/LICENSE)
+ */
+
+/*!
  * Sizzle CSS Selector Engine v2.3.6
  * https://sizzlejs.com/
  *
@@ -13,6 +19,12 @@
  * https://js.foundation/
  *
  * Date: 2021-02-16
+ */
+
+/*!
+ * bsCustomFileInput v1.3.4 (https://github.com/Johann-S/bs-custom-file-input)
+ * Copyright 2018 - 2020 Johann-S <johann.servoire@gmail.com>
+ * Licensed under MIT (https://github.com/Johann-S/bs-custom-file-input/blob/master/LICENSE)
  */
 
 /*!
@@ -28,6 +40,10 @@
  *
  * Date: 2021-03-02T17:08Z
  */
+
+/*! jQuery Validation Plugin - v1.19.3 - 1/9/2021
+ * https://jqueryvalidation.org/
+ * Copyright (c) 2021 Jörn Zaefferer; Licensed MIT */
 
 /**
  * @license
