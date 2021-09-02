@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('frontend.code_request');
+    //return view('frontend.code_request');
+    return redirect()->to('https://ahub.tech');
 });
 
 Route::get('/aftertwitchlogin', [App\Http\Controllers\HandleLogin::class, 'HandleTwitchLogin'])->name('after_login');
@@ -35,6 +36,10 @@ Route::middleware('admin')->prefix('admin')->group(function(){
     Route::get('/channel/{id}', [App\Http\Controllers\Admin\TwitchChannelController::class, 'editChannel'])->name('twitch_channel_edit');
     Route::post('/channel/{id}', [App\Http\Controllers\Admin\TwitchChannelController::class, 'updateChannel'])->name('twitch_channel_save');
     Route::get('/channel/delete/{id}', [App\Http\Controllers\Admin\TwitchChannelController::class, 'deleteChannel'])->name('twitch_channel_delete');
+});
+
+Route::middleware('unity')->prefix('unity')->group(function(){
+    Route::get('/avatar/', [App\Http\Controllers\Twitch\StreamerController::class, 'ShowAvatarOnBrowser'])->name('avatar');
 });
 
 Auth::routes();
