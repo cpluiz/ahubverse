@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Viewers extends Model
 {
     use HasFactory;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'user_id',
+        'avatar_id',
+    ];
 }

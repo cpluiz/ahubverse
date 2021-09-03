@@ -9,12 +9,12 @@
 
 @section('body')
     <canvas id="unity-canvas" style="width: 100vw !important; height: 100vh !important; max-width: 100%; max-height: 100%; background:transparent;"></canvas>
-    <script src="{{(secure_asset('js/Build/unity.loader.js'))}}"></script>
+    <script src="{{(secure_asset('js/Build/js.loader.js'))}}"></script>
     <script>
         createUnityInstance(document.querySelector("#unity-canvas"), {
-            dataUrl: "{{secure_asset('js/Build/unity.data')}}",
-            frameworkUrl: "{{secure_asset('js/Build/unity.framework.js')}}",
-            codeUrl: "{{secure_asset('js/Build/unity.wasm')}}",
+            dataUrl: "{{secure_asset('js/Build/js.data')}}",
+            frameworkUrl: "{{secure_asset('js/Build/js.framework.js')}}",
+            codeUrl: "{{secure_asset('js/Build/js.wasm')}}",
             streamingAssetsUrl: "StreamingAssets",
             companyName: "DefaultCompany",
             productName: "TwitchInteraction",

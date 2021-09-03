@@ -42,6 +42,10 @@ class TwitchController extends \App\Http\Controllers\Controller{
             return json_decode($response->getBody(), true);
     }
 
+    public function GetUserIdByName($userName){
+        return $this->GetChannelIdByName($userName);
+    }
+
     public function GetChannelIdByName($channelName){
         $endpoint = "https://api.twitch.tv/helix/users?login=".$channelName;
         $response = $this->GETapiCall($endpoint);
