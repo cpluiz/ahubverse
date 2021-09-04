@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\LastSuggestion;
 use App\Models\TwitchChannels;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use App\Http\Controllers;
+use \App\Http\Controllers\Twitch\TwitchController;
 
-class Streamer extends \App\Http\Controllers\Twitch\TwitchController {
+class Streamer extends TwitchController {
     public function GetCreatorsList(){
         //$channels = TwitchChannels::all()->pluck('channel_name')->toArray();
         $response = $this->GETcall('https://raw.githubusercontent.com/aHub-Tech/twitch-bot-wildoverflow/main/twitch_bot/database/streamers.yml');
@@ -26,6 +29,31 @@ class Streamer extends \App\Http\Controllers\Twitch\TwitchController {
             'ignoreUsers' => json_decode($channel->ignore_users)
         ], 200);
     }
+
+    public function CheckSuggestion($channelName, $suggestion){
+        $fromChannelId = $this->GetUserIdByName($channelName);
+        if(!TwitchChannels::where('channel_id', '=', $fromChannelId))
+            return response()->json(['message' => 'Channel ID not registered on this system'], 406);
+        $lastSuggested = LastSuggestion::where('from_channel_user_id', '=', $fromChannelId)->and('to_channel_name', '=', $suggestion);
+        if(!$lastSuggested) {
+            $lastSuggested = new LastSuggestion([
+                'from_channel_user_id' => $fromChannelId,
+                'to_channel_name' => $suggestion,
+                'last_suggestion' => Carbon::now()
+            ]);
+            return response()->json([
+                'followCommand' => true
+            ], 200);
+        }else{
+            $canSuggest = $lastSuggested->last_suggestion->diffInSeconds(Carbon::now()) > (3 * 60 * 60);
+            if($canSuggest)
+                $lastSuggested->last_suggestion = Carbon::now();
+            return response()->json([
+                'followCommand' => $canSuggest
+            ], 200);
+        }
+    }
+
     public function GetActiveUsers($channelName){
         $endpoint = "https://tmi.twitch.tv/group/user/".$channelName."/chatters";
         $response = $this->GETapiCall($endpoint);

@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\Streamer;
+use App\Http\Controllers\API\Viewer;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,9 +21,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::get('/creators', [App\Http\Controllers\API\Streamer::class, 'GetCreatorsList'])->name('creators');
-Route::get('/suggestions/{channelName}', [App\Http\Controllers\API\Streamer::class, 'GetFollowSuggestions'])->name('suggestions');
-Route::get('/chatters/{channelName}', [App\Http\Controllers\API\Streamer::class, 'GetActiveUsers'])->name('chatters');
-Route::get('/setAvatar/{userName}/{avatarId}', [App\Http\Controllers\API\Viewer::class, 'SetAvatar'])->name('set_avatar');
-Route::get('/getAvatar/{userName}', [App\Http\Controllers\API\Viewer::class, 'GetAvatar'])->name('get_avatar');
+Route::get('/creators', [Streamer::class, 'GetCreatorsList'])->name('creators');
+Route::get('/suggestions/{channelName}', [Streamer::class, 'GetFollowSuggestions'])->name('suggestions');
+Route::get('/chatters/{channelName}', [Streamer::class, 'GetActiveUsers'])->name('chatters');
+Route::get('/setAvatar/{userName}/{avatarId}', [Viewer::class, 'SetAvatar'])->name('set_avatar');
+Route::get('/getAvatar/{userName}', [Viewer::class, 'GetAvatar'])->name('get_avatar');
+Route::get('/suggestion/{channelName}/{suggestion}', [Streamer::class, 'CheckSuggestion'])->name('can_suggest');
 
