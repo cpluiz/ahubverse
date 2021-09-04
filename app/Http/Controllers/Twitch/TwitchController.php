@@ -30,7 +30,7 @@ class TwitchController extends \App\Http\Controllers\Controller{
     public function GetUserList(){
         if(!$this->apiKey)
             $this->RequestTwitchkey();
-        $endpoint = "https://api.twitch.tv/helix/users?login=cp_luiz";
+        $endpoint = "https://api.twitch.tv/helix/users?login=alinktothehub";
         $client = new \GuzzleHttp\Client();
         $response = $client->request('GET', $endpoint, [
             'headers' => [
@@ -59,6 +59,11 @@ class TwitchController extends \App\Http\Controllers\Controller{
         if($response->getStatusCode() == 200)
             return json_decode($response->getBody(), true)['data'][0]['login'];
         return null;
+    }
+
+    protected function GETcall($endpoint) : ResponseInterface{
+        $client = new \GuzzleHttp\Client();
+        return $client->request('GET', $endpoint);
     }
 
     protected function GETapiCall($endpoint) : ResponseInterface {
