@@ -24,7 +24,7 @@ class Streamer extends TwitchController {
             return response()->json("{error: 'channel not found'}", 404);
         $suggestions = json_decode($channel->follow_suggestions);
         $channels = array_merge(array_diff($this->GetCreatorsList(), [$channelName]),$suggestions);
-        $ignore = json_decode($channel->ignore_users)
+        $ignore = json_decode($channel->ignore_users);
         array_walk($channels, function(&$value){
             $value = strtolower($value);
         });
