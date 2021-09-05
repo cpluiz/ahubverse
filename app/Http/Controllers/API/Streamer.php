@@ -22,11 +22,18 @@ class Streamer extends TwitchController {
         $channel = TwitchChannels::where('channel_name','=',$channelName)->first();
         if(!$channel)
             return response()->json("{error: 'channel not found'}", 404);
-        $channels = array_diff($this->GetCreatorsList(), [$channelName]);
         $suggestions = json_decode($channel->follow_suggestions);
+        $channels = array_merge(array_diff($this->GetCreatorsList(), [$channelName]),$suggestions);
+        $ignore = json_decode($channel->ignore_users)
+        array_walk($channels, function(&$value){
+            $value = strtolower($value);
+        });
+        array_walk($ignore, function(&$value){
+            $value = strtolower($value);
+        });
         return response()->json([
-            'suggestions' => array_merge($channels, $suggestions),
-            'ignoreUsers' => json_decode($channel->ignore_users)
+            'suggestions' => $channels,
+            'ignoreUsers' => $ignore
         ], 200);
     }
 
