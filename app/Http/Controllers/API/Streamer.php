@@ -34,20 +34,23 @@ class Streamer extends TwitchController {
         $fromChannelId = $this->GetUserIdByName($channelName);
         if(!TwitchChannels::where('channel_id', '=', $fromChannelId))
             return response()->json(['message' => 'Channel ID not registered on this system'], 406);
-        $lastSuggested = LastSuggestion::where('from_channel_user_id', '=', $fromChannelId)->and('to_channel_name', '=', $suggestion);
+        $lastSuggested = LastSuggestion::where('from_channel_user_id', '=', $fromChannelId)->where('to_channel_name', '=', $suggestion)->first();
         if(!$lastSuggested) {
             $lastSuggested = new LastSuggestion([
                 'from_channel_user_id' => $fromChannelId,
                 'to_channel_name' => $suggestion,
                 'last_suggestion' => Carbon::now()
             ]);
+            $lastSuggested->save();
             return response()->json([
                 'followCommand' => true
             ], 200);
         }else{
             $canSuggest = $lastSuggested->last_suggestion->diffInSeconds(Carbon::now()) > (3 * 60 * 60);
-            if($canSuggest)
+            if($canSuggest) {
                 $lastSuggested->last_suggestion = Carbon::now();
+                $lastSuggested->save();
+            }
             return response()->json([
                 'followCommand' => $canSuggest
             ], 200);
