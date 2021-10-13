@@ -18,8 +18,15 @@ class IsCreator
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Count(TwitchChannels::where('channel_name', '=', request()->query->get('channelName'))->get()) > 0)
+        $channelName = $request->session()->get('channelName') ?? request()->query->get('channelName');
+        $channelData = TwitchChannels::where('channel_name', '=', $channelName)->get();
+        if(Count($channelData) > 0){
+            request()->query->remove('channelName');
+            $request->session()->put('channelName', $channelName);
+            $request->session()->put('channelID', $channelData[0]->channel_id);
+            $request->session()->save();
             return $next($request);
+        }
         return redirect('/');
     }
 }
