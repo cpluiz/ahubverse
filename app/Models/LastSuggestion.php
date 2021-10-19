@@ -10,6 +10,7 @@ class LastSuggestion extends Model
     use HasFactory;
     public $timestamps = false;
     public $incrementing = false;
+    protected $primaryKey = null;
     /**
      * The attributes that are mass assignable.
      *
