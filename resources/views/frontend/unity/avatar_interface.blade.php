@@ -22,13 +22,13 @@
         else if(storedChannelName != null)
             urlParams.set('channelName', storedChannelName);
         createUnityInstance(document.querySelector("#unity-canvas"), {
-            dataUrl: "{{secure_asset('js/Build/js.data')}}",
-            frameworkUrl: "{{secure_asset('js/Build/js.framework.js')}}",
-            codeUrl: "{{secure_asset('js/Build/js.wasm')}}",
-            streamingAssetsUrl: "StreamingAssets",
-            companyName: "DefaultCompany",
-            productName: "TwitchInteraction",
-            productVersion: "1.0",
+            dataUrl: "{{secure_asset('js/Build/js.data.unityweb')}}",
+            frameworkUrl: "{{secure_asset('js/Build/js.framework.js.unityweb')}}",
+            codeUrl: "{{secure_asset('js/Build/js.wasm.unityweb')}}",
+			streamingAssetsUrl: "StreamingAssets",
+			companyName: "HUB Tech",
+			productName: "AhubVerse",
+			productVersion: "1.0",
             matchWebGLToCanvasSize: true, // Uncomment this to separately control WebGL canvas render size and DOM element size.
             devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
         }).then((unityInstance) => {
