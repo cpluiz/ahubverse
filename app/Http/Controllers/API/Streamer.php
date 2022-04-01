@@ -22,7 +22,7 @@ class Streamer extends TwitchController {
         $channel = TwitchChannels::where('channel_name','=',$channelName)->first();
         if(!$channel)
             return response()->json("{error: 'channel not found'}", 404);
-        $suggestions = json_decode($channel->follow_suggestions);
+        $suggestions = json_decode($channel->follow_suggestions)??[];
         $channels = array_merge(array_diff($this->GetCreatorsList(), [$channelName]),$suggestions);
         $ignore = json_decode($channel->ignore_users);
         array_walk($channels, function(&$value){
@@ -62,6 +62,63 @@ class Streamer extends TwitchController {
                 'followCommand' => $canSuggest
             ], 200);
         }
+    }
+
+    public function SimulateBitMessage($bitCount){
+        $bitMessage = [
+            "data" => [
+                "user_name" => "cp_luiz",
+                "channel_name" => "cp_luiz",
+                "user_id" => "64017523",
+                "channel_id" => "64017523",
+                "time" => "2017-02-09T13:23:58.168Z",
+                "chat_message" => "Teste de mensagem de bit",
+                "bits_used" => $bitCount,
+                "total_bits_used" => $bitCount * 10,
+                "context" => "cheer",
+            ],
+            "version" => "1.0",
+            "message_type" => "bits_event",
+            "message_id" => "8145728a4-35f0-4cf7-9dc0-f2ef24de1eb6",
+            "is_anonymous" => false
+        ];
+        $mockedMessage = [
+            "type" => "MESSAGE",
+            "data" => [
+                "topic" => "channel-bits-events-v2.64017523",
+                "message" => json_encode($bitMessage)
+            ]
+        ];
+        return response()->json($mockedMessage, 200);
+    }
+
+    public function SimulateSubMessage(){
+        $bitMessage = [
+            "user_name" => "cp_luiz",
+            "display_name" => "cp_luiz",
+            "channel_name" => "cp_luiz",
+            "user_id" => "64017523",
+            "channel_id" => "64017523",
+            "time" => "2017-02-09T13:23:58.168Z",
+            "sub_plan" => "1000",
+            "sub_plan_name" => "Channel Subscription",
+            "cumulative_months" => 9,
+            "streak_months" => 3,
+            "context" => "resub",
+            "is_gift" => false,
+            "sub_message" => [
+                "message" => "Teste de mensagem de sub",
+                "emotes" => null
+            ]
+        ];
+        $mockedMessage = [
+            "type" => "MESSAGE",
+            "data" => [
+                "topic" => "channel-subscribe-events-v1.64017523",
+                "message" => json_encode($bitMessage)
+            ]
+        ];
+        return response()->json($mockedMessage, 200);
     }
 
     public function GetActiveUsers($channelName){
